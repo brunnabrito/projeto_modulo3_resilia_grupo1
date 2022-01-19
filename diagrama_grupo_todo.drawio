@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-01-19T12:24:55.854Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" etag="0WZnxiyEtJP4yNVxLaD6" version="16.2.7" type="github">
+<mxfile host="app.diagrams.net" modified="2022-01-19T17:11:59.489Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36" etag="PdZPESu4I84unOpFSHFS" version="16.4.0" type="github">
   <diagram id="YJDorFOKSxrE0az7E-os" name="Page-1">
-    <mxGraphModel dx="4021" dy="3126" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="2595" dy="2390" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -442,7 +442,7 @@
         </mxCell>
         <mxCell id="lmifUTo95L_frAYQCKhQ-9" value="(n,n)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="lmifUTo95L_frAYQCKhQ-8" vertex="1" connectable="0">
           <mxGeometry x="0.1351" y="3" relative="1" as="geometry">
-            <mxPoint y="-71" as="offset" />
+            <mxPoint x="-3" y="35" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="yTfPNT7VYN94s2qLSQWw-394" value="pertence" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
@@ -503,7 +503,7 @@
         </mxCell>
         <mxCell id="yTfPNT7VYN94s2qLSQWw-403" value="(n,n)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="yTfPNT7VYN94s2qLSQWw-402" vertex="1" connectable="0">
           <mxGeometry x="0.6644" relative="1" as="geometry">
-            <mxPoint as="offset" />
+            <mxPoint y="7" as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="yTfPNT7VYN94s2qLSQWw-404" value="pertence" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" parent="1" vertex="1">
