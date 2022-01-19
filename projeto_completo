@@ -588,7 +588,3 @@ group by tbt.curso
 SELECT EXTRACT('Year' FROM data_nascimento), nome
 FROM tb_aluno
 Where data_nascimento < '01/01/1992'
-
-
-
-
