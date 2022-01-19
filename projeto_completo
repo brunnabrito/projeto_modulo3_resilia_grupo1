@@ -563,28 +563,28 @@ VALUES  (11,1,'Boleto bancário',1252),
         (19,9,'Boleto bancário',2541),
 		
 		
-1-- Selecionar a quantidade total de estudantes cadastrados no banco;
+1 -- Selecionar a quantidade total de estudantes cadastrados no banco;
 select count(id_aluno) from tb_aluno
 
-2-- Selecionar todos os estudantes com os respectivos cursos que eles estão cadastrados;
+2 -- Selecionar todos os estudantes com os respectivos cursos que eles estão cadastrados;
 select a.nome, t.curso from tb_aluno a
 inner join tb_turma t on a.id_turma = t.id_turma
 
-3-- Selecionar quais pessoas facilitadoras atuam em mais de uma turma.
+3 -- Selecionar quais pessoas facilitadoras atuam em mais de uma turma.
 select tbdp.nome, count(tbf.id_turma) "Quantidade de turmas" from tb_facilitadores tbf
 inner join tb_departamento_pessoal tbdp on tbf.id_colaborador = tbdp.id_colaborador
 group by tbdp.nome having count(tbf.id_turma) > 1
 
-4-- Selecionar o método de pagamento dos alunos
+4 -- Selecionar o método de pagamento dos alunos
 select tba.nome, car.metodo_pagamento from contas_a_receber car
 inner join tb_aluno tba on tba.id_aluno = car.id_aluno
 
-5-- Exibir todos os cursos e quantos alunos por curso
+5 -- Exibir todos os cursos e quantos alunos por curso
 select tbt.curso, count(tba.id_aluno) from tb_turma tbt
 inner join tb_aluno tba on tba.id_turma = tbt.id_turma
 group by tbt.curso
 
-6-- Exibir alunos nascidos antes de 1992
+6 -- Exibir alunos nascidos antes de 1992
 SELECT EXTRACT('Year' FROM data_nascimento), nome
 FROM tb_aluno
 Where data_nascimento < '01/01/1992'
