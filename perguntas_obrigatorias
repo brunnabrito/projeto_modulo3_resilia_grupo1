@@ -1,8 +1,11 @@
--- Selecionar a quantidade total de estudantes cadastrados no banco;
-select count(id_aluno) from aluno
+1 -- Selecionar a quantidade total de estudantes cadastrados no banco;
+select count(id_aluno) from tb_aluno
 
--- Selecionar todos os estudantes com os respectivos cursos que eles estão cadastrados;
-select a.nome, t.curso from aluno a
-inner join turma t on a.id_turma = t.id_turma
+2 -- Selecionar todos os estudantes com os respectivos cursos que eles estão cadastrados;
+select a.nome, t.curso from tb_aluno a
+inner join tb_turma t on a.id_turma = t.id_turma
 
--- Selecionar quais pessoas facilitadoras atuam em mais de uma turma.
+3 -- Selecionar quais pessoas facilitadoras atuam em mais de uma turma.
+select tbdp.nome, count(tbf.id_turma) "Quantidade de turmas" from tb_facilitadores tbf
+inner join tb_departamento_pessoal tbdp on tbf.id_colaborador = tbdp.id_colaborador
+group by tbdp.nome having count(tbf.id_turma) > 1
