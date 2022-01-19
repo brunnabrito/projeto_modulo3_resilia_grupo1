@@ -1,0 +1,594 @@
+CREATE TABLE Marketing (
+	id_campanha SERIAL NOT NULL,
+	mes_campanha VARCHAR(50) NULL,
+	tipo_midia VARCHAR(50) NULL,
+    PRIMARY KEY (id_campanha)
+);
+
+CREATE TABLE Comercial (
+	id_leads SERIAL NOT NULL,
+	id_campanha INT NULL,
+	nome VARCHAR(50) NULL,
+	curso_interesse VARCHAR(50) NULL,
+	vendedor VARCHAR(50) NULL,
+	convertido BOOLEAN DEFAULT FALSE,
+    PRIMARY KEY (id_leads),
+	CONSTRAINT Fk_tipo_midia FOREIGN KEY (id_campanha) REFERENCES Marketing (id_campanha)
+);
+		                                                        																													 
+CREATE TABLE tb_turma(
+	id_turma SERIAL PRIMARY KEY,
+	data_inicio DATE NOT NULL,
+	curso VARCHAR(15)
+);
+
+CREATE TABLE tb_aluno(
+	id_aluno SERIAL PRIMARY KEY,
+	nome VARCHAR(50) NOT NULL,
+	cpf VARCHAR,
+	cidade VARCHAR(100),
+	estado VARCHAR(2),
+	data_nascimento DATE NOT NULL,
+	email VARCHAR(50) NOT NULL,
+	id_turma INTEGER,
+	FOREIGN KEY (id_turma) REFERENCES tb_turma (id_turma)
+);
+
+CREATE TABLE tb_departamento_pessoal (
+id_colaborador serial PRIMARY key,
+	nome varchar (50),
+	email varchar (50),
+	endereço varchar (200),
+	cpf varchar (14),
+	data_nascimento date,
+	dados_banco varchar (30)
+);
+
+CREATE TABLE tb_facilitadores (
+	id_colaborador INT,
+	FOREIGN KEY (id_colaborador) REFERENCES tb_departamento_pessoal (id_colaborador),
+	id_turma INT,
+	FOREIGN KEY (id_turma) REFERENCES tb_turma (id_turma)
+);
+
+CREATE TABLE contas_a_receber (
+            Id_transacao INT PRIMARY KEY,
+			id_aluno int,
+FOREIGN KEY (id_aluno) REFERENCES tb_aluno (id_aluno),
+            metodo_pagamento VARCHAR (20) NOT NULL,
+            valor_a_receber NUMERIC CHECK (valor_a_receber > 0) NOT NULL,
+            total_pago INT
+);
+
+CREATE TABLE contas_a_pagar (
+            Id_transacao INT PRIMARY KEY,
+            Id_colaborador INT,
+FOREIGN KEY (Id_colaborador) REFERENCES tb_departamento_pessoal (Id_colaborador),
+            metodo_pagamento VARCHAR (20) NOT NULL,
+            valor_a_pagar INT
+);
+
+--POPULAR UMA TABELA - ADICIONAR DADOS
+INSERT INTO Marketing (mes_campanha, tipo_midia) VALUES
+	('Janeiro', 'Instagram'),
+	('Fevereiro', 'Facebook'),
+	('Abril', 'Whatsapp'),
+	('Maio', 'Instagram'),
+	('Junho', 'Google'),
+	('Julho', 'Email'),
+	('Agosto', 'Telegram'),
+	('Dezembro', 'Instagram');
+	
+INSERT INTO Comercial (id_campanha, nome, curso_interesse, vendedor, convertido) VALUES
+	 ('1', 'Luana Taynara', 'Analise de dados', 'José', 'true'),
+	 ('1', 'Graziela Queiroz', 'Analise de dados', 'José', 'true' ),
+	 ('1', 'Natalia Thome', 'Analise de dados', 'José', 'false'),
+	 ('2', 'Jaqueline Caires', 'Analise de dados', 'Ana', 'true'),
+	 ('2', 'Helena Maria', 'Analise de dados', 'Ana', 'true'),
+	 ('3', 'Julia Andreia', 'Analise de dados', 'Ana', 'false'),
+	 ('3', 'Luiza Cristina', 'ADS', 'Ana', 'true'),
+	 ('8', 'Rafaela Binha', 'ADS', 'Fernanda', 'false'),
+	 ('4', 'Matheus Felipe', 'ADS', 'Fernanda', 'false'),
+	 ('4', 'Anthonny Garotinho','ADS', 'Fernanda', 'true'),
+	 ('4', 'Bryan Francisco', 'Python', 'Fernanda', 'true'),
+	 ('4', 'Henrique Diego', 'Python', 'Fernanda', 'true'),
+	 ('4', 'Ryan Douglas','Python', 'Diego', 'true'),
+	 ('5', 'Jurema Bernades','Python', 'Diego', 'true'),
+	 ('5', 'Felipe Junior', 'Front-End', 'Diego', 'false'),
+	 ('6', 'Erick Roberto', 'Front-End', 'Diego', 'false'),
+	 ('7', 'Francisco Jose', 'Front-End', 'Diego', 'true');
+
+
+insert into tb_turma values (1,'15/03/2019','Wed DEV');
+insert into tb_turma values (2,'17/06/2019','Wed DEV');
+insert into tb_turma values (3,'20/08/2019','Wed DEV');
+insert into tb_turma values (4,'25/11/2019','Wed DEV');
+insert into tb_turma values (5,'10/01/2020','Dados');
+insert into tb_turma values (6,'15/02/2020','Wed DEV');
+insert into tb_turma values (7,'26/03/2020','Wed DEV');
+insert into tb_turma values (8,'17/06/2020','Wed DEV');
+insert into tb_turma values (9,'19/11/2020','Wed DEV');
+insert into tb_turma values (10,'02/03/2021','Wed DEV');
+insert into tb_turma values (11,'16/08/2021','Wed DEV');
+insert into tb_turma values (12,'25/10/2021','Dados');
+
+insert into tb_aluno values (1,'Abraão Couto','026.413.374-95','Taquaritinga','SP','05/02/1987','@gmail.com','6');
+insert into tb_aluno values (2,'Adélio Vianna','877.521.006-17','Batatais','SP','20/02/1985','@gmail.com','4');
+insert into tb_aluno values (3,'Aguinaldo Pimienta','524.856.427-10','Londrina','PR','18/03/1979','@gmail.com','1');
+insert into tb_aluno values (4,'Alceste Aldeia','153.848.867-14','Maceió','AL','18/08/2020','@gmail.com','6');
+insert into tb_aluno values (5,'Aldonça Acuña','274.048.827-02','Matão','SP','03/11/1987','@gmail.com','2');
+insert into tb_aluno values (6,'Alexandre Carqueijeiro','430.302.586-02','Osasco','SP','11/07/1989','@gmail.com','9');
+insert into tb_aluno values (7,'Alice Quintero','774.763.670-90','Matão','SP','03/01/2001','@gmail.com','4');
+insert into tb_aluno values (8,'Almerinda Gabeira','367.542.768-43','São Paulo ','SP','06/04/1973','@gmail.com','4');
+insert into tb_aluno values (9,'Amandio González','016.574.650-55','São Paulo ','SP','09/12/1983','@gmail.com','11');
+insert into tb_aluno values (10,'Anacleto Mantas','171.354.588-85','Córrego Seco','MG','20/06/1972','@gmail.com','7');
+insert into tb_aluno values (11,'André Miguel','716.614.308-80','Baruero','SP','27/03/1971','@gmail.com','2');
+insert into tb_aluno values (12,'Aníbal Themes','151.272.012-75','Taquaritinga','SP','12/04/1964','@gmail.com','9');
+insert into tb_aluno values (13,'Arachane Santiago','433.724.243-01','São Paulo','SP','16/06/1986','@gmail.com','2');
+insert into tb_aluno values (14,'Araribóia Morais','708.046.775-65','São Paulo ','SP','02/01/1980','@gmail.com','9');
+insert into tb_aluno values (15,'Arcidres Olivares','711.108.416-04','São Paulo','SP','26/04/1999','@gmail.com','9');
+insert into tb_aluno values (16,'Aurora César','464.473.470-50','Mortugaba','BA','18/11/1990','@gmail.com','4');
+insert into tb_aluno values (17,'Aurora Pequeno','235.187.231-20','São Paulo ','SP','02/01/1980','@gmail.com','10');
+insert into tb_aluno values (18,'Balduíno Talhão','512.462.773-52','Matão','SP','16/07/1987','@gmail.com','2');
+insert into tb_aluno values (19,'Bento Palmeira','606.500.171-61','Araraquara','SP','27/03/1995','@gmail.com','3');
+insert into tb_aluno values (20,'Bernardina Passarinho','470.720.716-28','Rio Claro','SP','17/07/1982','@gmail.com','1');
+insert into tb_aluno values (21,'Bernardina Piñero','603.223.580-78','Rio Claro','SP','17/07/1982','@gmail.com','11');
+insert into tb_aluno values (22,'Caetano Palmeira','864.113.038-19','São Paulo','SP','11/08/1980','@gmail.com','7');
+insert into tb_aluno values (23,'Carla Silvera','737.286.188-88','Chapada do Norte','MG','20/06/1972','@gmail.com','2');
+insert into tb_aluno values (24,'Casimiro Alencastre','423.460.066-02','Distrito de Valparaiso','SP','23/10/1958','@gmail.com','10');
+insert into tb_aluno values (25,'Cassandra Bethancout','862.717.120-37','Distrito de Valparaiso','SP','23/10/1958','@gmail.com','2');
+insert into tb_aluno values (26,'Cauã Puentes','853.458.131-24','Osasco','SP','17/01/1988','@gmail.com','3');
+insert into tb_aluno values (27,'Caím Nobre','087.821.627-86','Osasco','SP','23/09/1990','@gmail.com','11');
+insert into tb_aluno values (28,'Cleiton Álvez','251.344.725-56','Altonia','PR','01/09/1981','@gmail.com','6');
+insert into tb_aluno values (29,'Clotilde Mainha','357.781.378-42','Osasco','SP','23/09/1990','@gmail.com','8');
+insert into tb_aluno values (30,'Constantino Vilas-Boas','621.625.601-78','São Paulo','SP','17/10/1995','@gmail.com','2');
+insert into tb_aluno values (31,'Cora Guedelha','703.104.874-55','São Paulo','SP','03/09/2000','@gmail.com','3');
+insert into tb_aluno values (32,'Cosme Cardozo','645.114.338-36','São Paulo','SP','03/09/2000','@gmail.com','12');
+insert into tb_aluno values (33,'Crispim Lacerda','704.280.751-00','São Paulo','SP','07/10/1989','@gmail.com','3');
+insert into tb_aluno values (34,'Custódio Paes','187.167.143-42','São Gonçalo','RJ','22/08/1981','@gmail.com','7');
+insert into tb_aluno values (35,'Cássia Saldaña','126.355.056-83','Aveiro','PT','26/07/1973','@gmail.com','10');
+insert into tb_aluno values (36,'Danilo Águeda','737.350.373-05','Osasco','SP','15/01/1986','@gmail.com','6');
+insert into tb_aluno values (37,'Delfina Capistrano','443.186.772-49','Niterói','RJ','08/09/1996','@gmail.com','7');
+insert into tb_aluno values (38,'Dina Pitangui','008.380.523-04','Ribeirao Preto','SP','30/12/1988','@gmail.com','12');
+insert into tb_aluno values (39,'Donata Maior','820.553.685-67','Matão','SP','19/05/1995','@gmail.com','2');
+insert into tb_aluno values (40,'Dorindo Mata','867.881.548-56','São Paulo','SP','08/10/1988','@gmail.com','3');
+insert into tb_aluno values (41,'Délia Vieira','303.062.033-67','Macaé','RJ','30/09/1976','@gmail.com','3');
+insert into tb_aluno values (42,'Edmundo Moreira','210.628.332-60','Guapiara','SP','08/02/1993','@gmail.com','3');
+insert into tb_aluno values (43,'Elisa Vellozo','600.127.100-32','Camargo','RS','05/10/1997','@gmail.com','4');
+insert into tb_aluno values (44,'Emanuel Jesús','081.774.136-43','Sítio Novo','MA','19/06/1995','@gmail.com','9');
+insert into tb_aluno values (45,'Emanuel Ramires','621.118.476-07','Tremedal','BA','18/03/1976','@gmail.com','8');
+insert into tb_aluno values (46,'Epaminondas Carreiro','272.413.362-59','Ribeirão','PE','21/04/1983','@gmail.com','11');
+insert into tb_aluno values (47,'Ermelinda Velasques','624.171.115-60','Cuiabá','MT','29/08/1988','@gmail.com','7');
+insert into tb_aluno values (48,'Ernesto Baldaia','061.658.020-79','Paulo Afonso','BA','21/09/1994','@gmail.com','10');
+insert into tb_aluno values (49,'Esperança Guilheiro','371.228.311-32','Santo Anastácio','SP','09/04/1986','@gmail.com','10');
+insert into tb_aluno values (50,'Estefânia Avelar','758.005.068-41','Ascurra','SC','30/12/1995','@gmail.com','11');
+insert into tb_aluno values (51,'Estefânia Chousa','620.272.538-90','Riachão do Bacamarte','PB','24/04/1998','@gmail.com','12');
+insert into tb_aluno values (52,'Estêvão Carromeu','421.110.658-97','Miraíma','CE','20/11/1972','@gmail.com','5');
+insert into tb_aluno values (53,'Eudes Sá','723.374.351-72','Presidente Kennedy','ES','25/10/1989','@gmail.com','6');
+insert into tb_aluno values (54,'Eugénio Milheiro','452.006.082-60','Braganey','PR','06/08/1983','@gmail.com','10');
+insert into tb_aluno values (55,'Evaristo Canejo','700.020.828-70','Soure','PA','27/01/1976','@gmail.com','6');
+insert into tb_aluno values (56,'Fabiana Abrantes','062.617.468-69','Jandira','SP','05/09/1990','@gmail.com','2');
+insert into tb_aluno values (57,'Fabiano Guerrero','420.008.780-40','Ipiranga do Norte','MT','09/12/1992','@gmail.com','9');
+insert into tb_aluno values (58,'Fabrício Baía','421.724.157-74','Cantagalo','MG','02/08/2000','@gmail.com','2');
+insert into tb_aluno values (59,'Fernando Estrada','643.175.644-40','Jaíba','MG','26/04/1990','@gmail.com','9');
+insert into tb_aluno values (60,'Filipa Lampreia','304.133.447-03','Porto Firme','MG','02/12/2000','@gmail.com','12');
+insert into tb_aluno values (61,'Frederico Vásquez','004.882.072-58','Japaratinga','AL','07/02/1975','@gmail.com','4');
+insert into tb_aluno values (62,'Frutuoso Carromeu','570.622.053-03','Salgueiro','PE','12/08/1983','@gmail.com','9');
+insert into tb_aluno values (63,'Fábia Boga','381.045.756-60','Piacatu','SP','19/09/2000','@gmail.com','10');
+insert into tb_aluno values (64,'Fábia Quaresma','246.868.666-77','São Paulo das Missões','RS','19/05/1992','@gmail.com','2');
+insert into tb_aluno values (65,'Garibaldo Espírito Santo','155.001.017-49','Campos Borges','RS','12/08/1986','@gmail.com','12');
+insert into tb_aluno values (66,'Gerson Cabeça de Vaca','734.705.751-50','Poção de Pedras','MA','23/05/1973','@gmail.com','10');
+insert into tb_aluno values (67,'Gerusa Camarinho','413.682.011-99','Pintópolis','MG','12/01/1973','@gmail.com','10');
+insert into tb_aluno values (68,'Gilberto Valido','860.481.178-84','Presidente Sarney','MA','18/07/1978','@gmail.com','11');
+insert into tb_aluno values (69,'Ginéculo Clementino','063.620.631-98','Redenção','PA','06/09/1990','@gmail.com','1');
+insert into tb_aluno values (70,'Gisela Benevides','044.283.067-09','Anadia','AL','25/04/1991','@gmail.com','7');
+insert into tb_aluno values (71,'Gláucia Rosario','041.014.173-93','Nova Monte Verde','MT','28/08/1989','@gmail.com','5');
+insert into tb_aluno values (72,'Glória Vicario','326.251.054-88','Guaraqueçaba','PR','20/12/1994','@gmail.com','3');
+insert into tb_aluno values (73,'Godo Malafaia','135.780.476-86','Boa Vista do Cadeado','RS','25/05/1998','@gmail.com','5');
+insert into tb_aluno values (74,'Graciano Pozas','315.168.107-75','Jeremoabo','BA','31/10/1988','@gmail.com','1');
+insert into tb_aluno values (75,'Gualdim Freitas','641.070.338-48','Divinésia','MG','07/10/1987','@gmail.com','12');
+insert into tb_aluno values (76,'Gui Felgueiras','223.142.487-83','Rubelita','MG','01/05/1998','@gmail.com','12');
+insert into tb_aluno values (77,'Gui Soeiro','137.201.125-00','Mallet','PR','17/05/1992','@gmail.com','7');
+insert into tb_aluno values (78,'Guilherme Valério','353.834.567-83','Tremedal','BA','04/03/1974','@gmail.com','12');
+insert into tb_aluno values (79,'Guálter, Walter Díaz','615.835.014-10','Pombal','PB','10/06/1974','@gmail.com','9');
+insert into tb_aluno values (80,'Heloísa Bensaúde','243.271.500-45','Cássia dos Coqueiros','SP','11/06/1994','@gmail.com','11');
+insert into tb_aluno values (81,'Henrique Areosa','546.467.733-09','Solidão','PE','10/08/1999','@gmail.com','9');
+insert into tb_aluno values (82,'Herculano Casalinho','355.228.800-74','Cromínia','GO','03/06/1987','@gmail.com','9');
+insert into tb_aluno values (83,'Heriberto Capiperibe','524.238.126-47','Itaporanga dAjuda','SE','22/07/1973','@gmail.com','8');
+insert into tb_aluno values (84,'Hermígio Lage','327.123.110-94','Montividiu','GO','04/04/1975','@gmail.com','6');
+insert into tb_aluno values (85,'Honório Naves','002.876.052-21','Altamira','PA','03/05/1974','@gmail.com','12');
+insert into tb_aluno values (86,'Hugo Lacerda','573.122.635-00','São Carlos do Ivaí','PR','09/11/1991','@gmail.com','3');
+insert into tb_aluno values (87,'Ibijara Sintra','378.886.173-87','Cajari','MA','30/04/1977','@gmail.com','6');
+insert into tb_aluno values (88,'Ildefonso Bahía','882.134.522-08','Curral Novo do Piauí','PI','20/08/1982','@gmail.com','10');
+insert into tb_aluno values (89,'Inácio Barretto','747.461.653-00','Ibituruna','MG','16/03/1978','@gmail.com','5');
+insert into tb_aluno values (90,'Iolanda Holanda','335.016.853-19','Mampituba','RS','23/05/1999','@gmail.com','8');
+insert into tb_aluno values (91,'Iraci Freyria','635.613.727-40','Dueré','TO','08/08/1987','@gmail.com','12');
+insert into tb_aluno values (92,'Isilda Parreira','111.146.225-91','Avaí','SP','17/01/1998','@gmail.com','6');
+insert into tb_aluno values (93,'Ismael Açores','463.315.802-39','Mato Leitão','RS','11/11/1972','@gmail.com','11');
+insert into tb_aluno values (94,'Itiberê Miera','201.563.267-01','Dois Córregos','SP','31/07/1996','@gmail.com','9');
+insert into tb_aluno values (95,'Iuri Balsemão','632.337.065-45','Itirapuã','SP','13/08/1988','@gmail.com','6');
+insert into tb_aluno values (96,'Jacinta Pinhal','000.713.415-01','Rochedo de Minas','MG','14/06/1972','@gmail.com','2');
+insert into tb_aluno values (97,'Jandaíra Cidreira','276.054.055-37','Várzea Paulista','SP','08/08/1972','@gmail.com','12');
+insert into tb_aluno values (98,'Joaquina Vellozo','370.158.860-06','Monte Carmelo','MG','06/06/1976','@gmail.com','4');
+insert into tb_aluno values (99,'Joel Salomón','344.346.681-88','Augustinópolis','TO','05/02/1986','@gmail.com','9');
+insert into tb_aluno values (100,'Jordão Fernández','651.887.682-40','Porto Amazonas','PR','12/08/1990','@gmail.com','12');
+insert into tb_aluno values (101,'Laurinda Lagoa','745.023.302-99','Engenheiro Beltrão','PR','10/11/1984','@gmail.com','5');
+insert into tb_aluno values (102,'Lavínia Mendonça','586.035.378-28','Marianópolis do Tocantins','TO','22/06/1999','@gmail.com','10');
+insert into tb_aluno values (103,'Leandro Linhares','484.264.865-17','Igarassu','PE','31/03/1977','@gmail.com','6');
+insert into tb_aluno values (104,'Leonilde Murici','275.588.321-95','Ipixuna do Pará','PA','06/12/2000','@gmail.com','6');
+insert into tb_aluno values (105,'Leonilde Resende','053.445.623-57','Divinolândia','SP','27/09/1985','@gmail.com','1');
+insert into tb_aluno values (106,'Leonor Álvaro','056.840.648-68','Paraú','RN','06/01/1990','@gmail.com','11');
+insert into tb_aluno values (107,'Leopoldina Casqueira','187.106.501-13','Anicuns','GO','20/08/1984','@gmail.com','8');
+insert into tb_aluno values (108,'Leopoldina Vilanova','602.884.523-05','Governador Newton Bello','MA','18/09/1986','@gmail.com','9');
+insert into tb_aluno values (109,'Levi Bernárdez','471.058.644-60','Caaporã','PB','17/08/1984','@gmail.com','12');
+insert into tb_aluno values (110,'Liana Pitanga','480.064.055-57','Iconha','ES','09/07/1985','@gmail.com','3');
+insert into tb_aluno values (111,'Luciana Azambuja','383.223.867-02','Santa Cruz do Piauí','PI','11/10/1990','@gmail.com','6');
+insert into tb_aluno values (112,'Luciana Cipriano','011.725.585-82','Franco da Rocha','SP','17/04/1996','@gmail.com','12');
+insert into tb_aluno values (113,'Lucílio Filipe','513.658.110-77','Remanso','BA','13/04/1976','@gmail.com','3');
+insert into tb_aluno values (114,'Ludovico Festas','281.772.826-20','Treze de Maio','SC','29/12/1980','@gmail.com','11');
+insert into tb_aluno values (115,'Ludovico Tristán','523.004.281-80','Brotas de Macaúbas','BA','15/01/1977','@gmail.com','4');
+insert into tb_aluno values (116,'Luize Farias','673.310.572-19','Toritama','PE','07/01/1990','@gmail.com','8');
+insert into tb_aluno values (117,'Lurdes Antúnez','007.762.861-61','Amaral Ferrador','RS','22/05/1996','@gmail.com','3');
+insert into tb_aluno values (118,'Lénia Macieira','561.215.866-13','Carlos Barbosa','RS','09/04/1981','@gmail.com','5');
+insert into tb_aluno values (119,'Lília Penteado','526.148.268-20','Jaraguá do Sul','SC','18/04/2001','@gmail.com','6');
+insert into tb_aluno values (120,'Marco Cabral','416.721.426-10','Zortéa','SC','09/02/1981','@gmail.com','2');
+insert into tb_aluno values (121,'Margarida Corte-Real','606.423.451-20','Serrano do Maranhão','MA','01/05/1996','@gmail.com','11');
+insert into tb_aluno values (122,'Margarida Pena','377.105.020-08','Itaberaba','BA','06/11/1985','@gmail.com','11');
+insert into tb_aluno values (123,'Marisa Domingues','502.004.567-50','Varginha','MG','19/11/1986','@gmail.com','2');
+insert into tb_aluno values (124,'Marli Ipanema','458.485.512-94','São José da Lapa','MG','12/07/1972','@gmail.com','4');
+insert into tb_aluno values (125,'Martim Vale','386.281.365-76','Aspásia','SP','01/06/1973','@gmail.com','7');
+insert into tb_aluno values (126,'Matilde Milheiro','050.122.815-27','Catuji','MG','01/04/1997','@gmail.com','11');
+insert into tb_aluno values (127,'Mauro Álvarez','002.772.117-51','Palmares Paulista','SP','08/10/1986','@gmail.com','2');
+insert into tb_aluno values (128,'Maíra Camarinho','764.280.365-68','José da Penha','RN','03/05/1974','@gmail.com','9');
+insert into tb_aluno values (129,'Melinda Téllez','665.638.043-30','Emas','PB','26/04/1978','@gmail.com','10');
+insert into tb_aluno values (130,'Mercedes Lustosa','182.306.726-36','Piedade do Rio Grande','MG','25/08/1999','@gmail.com','8');
+insert into tb_aluno values (131,'Micael Tabajara','853.367.573-90','Groaíras','CE','30/10/1991','@gmail.com','8');
+insert into tb_aluno values (132,'Mileide Froes','836.143.877-71','Porangatu','GO','25/07/1997','@gmail.com','1');
+insert into tb_aluno values (133,'Milu Caminha','217.347.326-36','Marabá','PA','12/04/1975','@gmail.com','6');
+insert into tb_aluno values (134,'Miru Parahyba','685.112.851-99','Santa Amélia','PR','06/04/1980','@gmail.com','4');
+insert into tb_aluno values (135,'Moacir Conceição','883.615.477-89','Armação dos Búzios','RJ','30/01/1973','@gmail.com','4');
+insert into tb_aluno values (136,'Murici Camacho','065.832.126-92','Agrestina','PE','31/01/1976','@gmail.com','1');
+insert into tb_aluno values (137,'Mário Imbassaí','283.238.754-30','Palotina','PR','11/01/1979','@gmail.com','3');
+insert into tb_aluno values (138,'Máximo Rosario','135.518.585-86','São Sebastião do Paraíso','MG','28/01/1988','@gmail.com','3');
+insert into tb_aluno values (139,'Napoleão Guarabira','833.243.223-59','Primavera','PA','24/02/1994','@gmail.com','6');
+insert into tb_aluno values (140,'Napoleão Toledo','717.068.317-22','Bastos','SP','03/01/1977','@gmail.com','6');
+insert into tb_aluno values (141,'Natividade Terra','640.688.237-74','SantAna do Livramento','RS','05/04/1999','@gmail.com','5');
+insert into tb_aluno values (142,'Nazaré Sobreira','488.582.212-22','Orlândia','SP','16/09/1979','@gmail.com','12');
+insert into tb_aluno values (143,'Nelson Noite','077.250.643-46','Maringá','PR','23/06/1992','@gmail.com','3');
+insert into tb_aluno values (144,'Noel Medina','467.437.057-48','Tavares','RS','30/04/1979','@gmail.com','10');
+insert into tb_aluno values (145,'Norberto Carvalhoso','552.835.714-40','Mendes','RJ','25/06/1996','@gmail.com','1');
+insert into tb_aluno values (146,'Noé Passos','068.087.444-59','Guarantã do Norte','MT','22/09/1986','@gmail.com','6');
+insert into tb_aluno values (147,'Noémia Quinteiro','648.111.228-10','Ibirapuã','BA','15/12/1990','@gmail.com','10');
+insert into tb_aluno values (148,'Odilia Guilheiro','158.668.680-16','Capinzal','SC','22/11/1997','@gmail.com','11');
+insert into tb_aluno values (149,'Olívia Rua','501.415.433-61','Riachinho','MG','09/07/1977','@gmail.com','9');
+insert into tb_aluno values (150,'Osvaldo Canela','342.825.662-05','Crucilândia','MG','16/04/1980','@gmail.com','1');
+insert into tb_aluno values (151,'Ovídio Felgueira','383.886.424-72','Ilópolis','RS','23/01/1995','@gmail.com','4');
+insert into tb_aluno values (152,'Palmira Carqueijeiro','334.065.064-02','Taboleiro Grande','RN','01/08/1998','@gmail.com','4');
+insert into tb_aluno values (153,'Patrício Souto Maior','870.727.422-04','Passo de Torres','SC','17/03/1974','@gmail.com','1');
+insert into tb_aluno values (154,'Paulina Barcellos','344.042.860-58','Santaluz','BA','17/06/1982','@gmail.com','9');
+insert into tb_aluno values (155,'Peri Gil','306.606.648-79','São Rafael','RN','01/08/1995','@gmail.com','7');
+insert into tb_aluno values (156,'Peri Morera','170.354.014-07','Itamogi','MG','17/04/1998','@gmail.com','8');
+insert into tb_aluno values (157,'Piedade Tibiriçá','778.486.023-46','Belém','PB','06/11/1992','@gmail.com','9');
+insert into tb_aluno values (158,'Políbio Teles','836.564.173-93','Lagoa dAnta','RN','18/11/1975','@gmail.com','1');
+insert into tb_aluno values (159,'Quintiliana Alencastre','840.376.458-82','Santa Maria do Pará','PA','20/05/1976','@gmail.com','3');
+insert into tb_aluno values (160,'Quitéria Silva','415.168.118-36','Pacatuba','SE','07/04/1984','@gmail.com','9');
+insert into tb_aluno values (161,'Rafael Lustosa','576.422.765-83','Itupeva','SP','07/09/1999','@gmail.com','11');
+insert into tb_aluno values (162,'Raul Gouveia','780.476.816-80','Araci','BA','24/09/1973','@gmail.com','9');
+insert into tb_aluno values (163,'Reinaldo Galván','252.724.741-55','Giruá','RS','14/02/1974','@gmail.com','8');
+insert into tb_aluno values (164,'Renata Cavadas','247.705.665-49','Bom Jesus do Araguaia','MT','02/08/1998','@gmail.com','8');
+insert into tb_aluno values (165,'Renato Viegas','635.763.822-67','Presidente Sarney','MA','17/09/1993','@gmail.com','9');
+insert into tb_aluno values (166,'Roberta Quintanilla','107.532.245-69','Minduri','MG','26/05/1978','@gmail.com','10');
+insert into tb_aluno values (167,'Romano Gouvêa','126.271.165-76','Bonópolis','GO','10/06/1993','@gmail.com','4');
+insert into tb_aluno values (168,'Rubim Sardinha','121.762.064-87','Aragoiânia','GO','29/09/1978','@gmail.com','9');
+insert into tb_aluno values (169,'Rómulo Fogassa','873.062.446-04','Belém','PA','11/02/1998','@gmail.com','4');
+insert into tb_aluno values (170,'Rúben Covelhã','662.182.187-59','Luz','MG','19/07/1985','@gmail.com','1');
+insert into tb_aluno values (171,'Samuel Bezerril','372.572.387-74','Riacho dos Cavalos','PB','22/07/1997','@gmail.com','10');
+insert into tb_aluno values (172,'Sandoval Jorge','318.757.705-93','São Francisco','PB','09/03/1983','@gmail.com','9');
+insert into tb_aluno values (173,'Sarita Cordeiro','851.867.661-43','Catas Altas','MG','14/05/1973','@gmail.com','11');
+insert into tb_aluno values (174,'Sidônio   Candal','483.315.562-16','Herveiras','RS','27/11/1984','@gmail.com','10');
+insert into tb_aluno values (175,'Silvana Doutel','434.766.131-27','Brasilândia do Tocantins','TO','01/07/1982','@gmail.com','4');
+insert into tb_aluno values (176,'Silvano Soto','480.154.108-94','Fortaleza de Minas','MG','29/01/1997','@gmail.com','4');
+insert into tb_aluno values (177,'Simão Zagallo','713.437.412-20','Castelo do Piauí','PI','25/05/1986','@gmail.com','1');
+insert into tb_aluno values (178,'Sofia Lucas','841.834.068-11','Indiaporã','SP','28/01/1984','@gmail.com','11');
+insert into tb_aluno values (179,'Solano Bogado','075.255.747-58','Cocalinho','MT','20/09/1983','@gmail.com','3');
+insert into tb_aluno values (180,'Sonás Assis','574.421.788-63','Bertioga','SP','20/09/1993','@gmail.com','1');
+insert into tb_aluno values (181,'Sílvia Abasto','572.211.231-36','Gouveia','MG','16/02/1985','@gmail.com','6');
+insert into tb_aluno values (182,'Sílvio Rodrigues','554.304.807-62','Tumiritinga','MG','15/02/1998','@gmail.com','1');
+insert into tb_aluno values (183,'Sónia Blanco','100.835.687-51','Porto Alegre do Tocantins','TO','02/11/1994','@gmail.com','4');
+insert into tb_aluno values (184,'Tarrataca Castro','853.710.181-82','Aiuruoca','MG','08/02/1986','@gmail.com','3');
+insert into tb_aluno values (185,'Tobias Freixo','438.012.053-80','Fernandes Pinheiro','PR','26/03/1994','@gmail.com','5');
+insert into tb_aluno values (186,'Tobias Pimienta','637.535.516-86','Bom Jesus do Sul','PR','24/09/1978','@gmail.com','2');
+insert into tb_aluno values (187,'Tomás Becerril','365.672.763-55','Timbaúba dos Batistas','RN','21/03/1979','@gmail.com','12');
+insert into tb_aluno values (188,'Trajano Paranhos','836.236.470-04','Francisco Dantas','RN','11/12/1977','@gmail.com','6');
+insert into tb_aluno values (189,'Ubirajara Campelo','883.641.037-50','Cacique Doble','RS','14/07/1979','@gmail.com','3');
+insert into tb_aluno values (190,'Valéria Marcondes','328.636.467-37','Crisólita','MG','02/10/1984','@gmail.com','6');
+insert into tb_aluno values (191,'Valério Calheiros','638.742.870-09','Santa Rita de Jacutinga','MG','30/06/1985','@gmail.com','11');
+insert into tb_aluno values (192,'Vasco Lousã','680.800.200-27','Jandaíra','RN','20/04/1984','@gmail.com','7');
+insert into tb_aluno values (193,'Violeta Bento','635.301.653-01','São João do Polêsine','RS','30/11/1999','@gmail.com','7');
+insert into tb_aluno values (194,'Viridiano Barreiro','681.418.381-13','São Sebastião da Boa Vista','PA','18/03/1983','@gmail.com','12');
+insert into tb_aluno values (195,'Vitória Rebocho','687.175.668-00','Monte Alegre de Minas','MG','04/12/1995','@gmail.com','3');
+insert into tb_aluno values (196,'Viviana Canedo','284.370.616-52','Lagoa Vermelha','RS','14/08/1983','@gmail.com','7');
+insert into tb_aluno values (197,'Zózimo Nieto','008.812.720-60','Lagoa Formosa','MG','03/10/1987','@gmail.com','12');
+insert into tb_aluno values (198,'Átila Ruas','611.802.075-21','São Sebastião do Oeste','MG','28/08/2000','@gmail.com','12');
+insert into tb_aluno values (199,'Élvio Grilo','303.833.870-27','Coruripe','AL','23/01/1979','@gmail.com','4');
+insert into tb_aluno values (200,'Élvio Pessoa','080.221.217-46','São João de Iracema','SP','27/12/1972','@gmail.com','10');
+
+
+
+INSERT INTO tb_departamento_pessoal (nome, email, endereço, cpf, data_nascimento, dados_banco) VALUES
+	('Matheus Costa', 'costamatheus@gmail.com', 'Rua coronel augusto, numero 43, Centro', 
+	 '115.125.103-86','1997-06-15', 'Itau 1497. 8964-5'),
+	('Rodrigo Silva', 'rodrigosilvaa@gmail,com', 'rua parque das flores, quadra B, numero 2, centro', '221.550.717-95', 
+	'1970-12-31', 'Itau 0222. 6895-6'),
+	('Guilherme Mendes', 'guilhermemg@gmail.com', 'Avenida dos ferroviarios, quadra D, Amparo', '878.071.436-65',
+	 '1990-04-25', 'Itau 5469. 2526-8'),
+	('Jessica Costa', 'jessicanjc@hotmail.com', 'Rua Ricardo Gouveia, numero 7, Campo de coelho', '586.784.124-37',
+	 '1982-03-11','Itau 7479. 9748-5'),
+	('Natalia Silva', 'natisilva@hotmails.com', 'Rua Piracicaba, numero 29, Centro', '766.035.072-26', 
+	 '1995-09-01', 'Itau 4632. 8754-7'),
+	 ('Cristofer Rodrigues', 'cristofer@gmail.com', 'Avenida dos palmares, quadra 20. Centro', '561.730.787-83', 
+	'1970-05-13', 'Itau 0282. 6395-6'),
+	('Gustavo Mendes', 'gustavom@gmail.com', 'Rua augsto vale, Amparo', '608.468.706-73',
+	 '1990-08-25', 'Itau 5989. 2526-8'),
+	('Jessica Lopes', 'jessicanjc@hotmail.com', 'RuaGouveia, numero987, Campos', '684.525.415-03',
+	 '1982-08-12','Itau 7479. 9748-5'),
+	('Natan Silva', 'natansilva@hotmails.com', 'AvenidaPiracicaba, numero 29, Stucky', '465.776.062-93', 
+	 '1995-07-03', 'Itau 4632. 8754-7');
+	 
+
+INSERT INTO tb_facilitadores VALUES 
+	(1,1),
+	(2,1),
+	(3,2),
+	(4,2),
+	(5,3),
+	(6,3),
+	(7,4),
+	(8,5),
+	(9,7),
+	(1,6);
+	
+INSERT INTO contas_a_receber (Id_transacao,id_aluno,metodo_pagamento,valor_a_receber,total_pago)
+VALUES  (201,1,'Boleto Bancario',1000,10000),
+        (202,2,'Boleto Bancario',1001,10001),
+        (203,3,'Boleto Bancario',1002,10002),
+        (204,4,'Boleto Bancario',1003,10003),
+        (205,5,'Boleto Bancario',1004,10004),
+        (206,6,'Boleto Bancario',1005,10005),
+        (207,7,'Boleto Bancario',1006,10006),
+        (208,8,'Boleto Bancario',1007,10007),
+        (209,9,'Boleto Bancario',1008,10008),
+        (210,10,'Boleto Bancario',1009,10009),
+        (211,11,'Boleto Bancario',1010,10010),
+        (212,12,'Boleto Bancario',1011,10011),
+        (213,13,'Boleto Bancario',1012,10012),
+        (214,14,'Boleto Bancario',1013,10013),
+        (215,15,'Boleto Bancario',1014,10014),
+        (216,16,'Boleto Bancario',1015,10015),
+        (217,17,'Boleto Bancario',1016,10016),
+        (218,18,'Boleto Bancario',1017,10017),
+        (219,19,'Boleto Bancario',1018,10018),
+        (220,20,'Boleto Bancario',1019,10019),
+        (221,21,'Boleto Bancario',1020,10020),
+        (222,22,'Boleto Bancario',1021,10021),
+        (223,23,'Boleto Bancario',1022,10022),
+        (224,24,'Boleto Bancario',1023,10023),
+        (225,25,'Boleto Bancario',1024,10024),
+        (226,26,'Boleto Bancario',1025,10025),
+        (227,27,'Boleto Bancario',1026,10026),
+        (228,28,'Boleto Bancario',1027,10027),
+        (229,29,'Boleto Bancario',1028,10028),
+        (230,30,'Boleto Bancario',1029,10029),
+        (231,31,'Boleto Bancario',1030,10030),
+        (232,32,'Boleto Bancario',1031,10031),
+        (233,33,'Boleto Bancario',1032,10032),
+        (234,34,'Boleto Bancario',1033,10033),
+        (235,35,'Boleto Bancario',1034,10034),
+        (236,36,'Boleto Bancario',1035,10035),
+        (237,37,'Boleto Bancario',1036,10036),
+        (238,38,'Boleto Bancario',1037,10037),
+        (239,39,'Boleto Bancario',1038,10038),
+        (240,40,'Boleto Bancario',1039,10039),
+        (241,41,'Boleto Bancario',1040,10040),
+        (242,42,'Boleto Bancario',1041,10041),
+        (243,43,'Boleto Bancario',1042,10042),
+        (244,44,'Boleto Bancario',1043,10043),
+        (245,45,'Boleto Bancario',1044,10044),
+        (246,46,'Boleto Bancario',1045,10045),
+        (247,47,'Boleto Bancario',1046,10046),
+        (248,48,'Boleto Bancario',1047,10047),
+        (249,49,'Boleto Bancario',1048,10048),
+        (250,50,'Boleto Bancario',1049,10049),
+        (251,51,'Boleto Bancario',1050,10050),
+        (252,52,'Boleto Bancario',1051,10051),
+        (253,53,'Boleto Bancario',1052,10052),
+        (254,54,'Boleto Bancario',1053,10053),
+        (255,55,'Boleto Bancario',1054,10054),
+        (256,56,'Boleto Bancario',1055,10055),
+        (257,57,'Boleto Bancario',1056,10056),
+        (258,58,'Boleto Bancario',1057,10057),
+        (259,59,'Boleto Bancario',1058,10058),
+        (260,60,'Boleto Bancario',1059,10059),
+        (261,61,'Boleto Bancario',1060,10060),
+        (262,62,'Boleto Bancario',1061,10061),
+        (263,63,'Boleto Bancario',1062,10062),
+        (264,64,'Boleto Bancario',1063,10063),
+        (265,65,'Boleto Bancario',1064,10064),
+        (266,66,'Boleto Bancario',1065,10065),
+        (267,67,'Boleto Bancario',1066,10066),
+        (268,68,'Boleto Bancario',1067,10067),
+        (269,69,'Boleto Bancario',1068,10068),
+        (270,70,'Boleto Bancario',1069,10069),
+        (271,71,'Boleto Bancario',1070,10070),
+        (272,72,'Boleto Bancario',1071,10071),
+        (273,73,'Boleto Bancario',1072,10072),
+        (274,74,'Boleto Bancario',1073,10073),
+        (275,75,'Boleto Bancario',1074,10074),
+        (276,76,'Boleto Bancario',1075,10075),
+        (277,77,'Boleto Bancario',1076,10076),
+        (278,78,'Boleto Bancario',1077,10077),
+        (279,79,'Boleto Bancario',1078,10078),
+        (280,80,'Boleto Bancario',1079,10079),
+        (281,81,'Boleto Bancario',1080,10080),
+        (282,82,'Boleto Bancario',1081,10081),
+        (283,83,'Boleto Bancario',1082,10082),
+        (284,84,'Boleto Bancario',1083,10083),
+        (285,85,'Boleto Bancario',1084,10084),
+        (286,86,'Boleto Bancario',1085,10085),
+        (287,87,'Boleto Bancario',1086,10086),
+        (288,88,'Boleto Bancario',1087,10087),
+        (289,89,'Boleto Bancario',1088,10088),
+        (290,90,'Boleto Bancario',1089,10089),
+        (291,91,'Boleto Bancario',1090,10090),
+        (292,92,'Boleto Bancario',1091,10091),
+        (293,93,'Boleto Bancario',1092,10092),
+        (294,94,'Boleto Bancario',1093,10093),
+        (295,95,'Boleto Bancario',1094,10094),
+        (296,96,'Boleto Bancario',1095,10095),
+        (297,97,'Boleto Bancario',1096,10096),
+        (298,98,'Boleto Bancario',1097,10097),
+        (299,99,'Boleto Bancario',1098,10098),
+        (300,100,'Boleto Bancario',1099,10099),
+        (301,101,'Boleto Bancario',1100,10100),
+        (302,102,'Boleto Bancario',1101,10101),
+        (303,103,'Boleto Bancario',1102,10102),
+        (304,104,'Boleto Bancario',1103,10103),
+        (305,105,'Boleto Bancario',1104,10104),
+        (306,106,'Boleto Bancario',1105,10105),
+        (307,107,'Boleto Bancario',1106,10106),
+        (308,108,'Boleto Bancario',1107,10107),
+        (309,109,'Boleto Bancario',1108,10108),
+        (310,110,'Boleto Bancario',1109,10109),
+        (311,111,'Boleto Bancario',1110,10110),
+        (312,112,'Boleto Bancario',1111,10111),
+        (313,113,'Boleto Bancario',1112,10112),
+        (314,114,'Boleto Bancario',1113,10113),
+        (315,115,'Boleto Bancario',1114,10114),
+        (316,116,'Boleto Bancario',1115,10115),
+        (317,117,'Boleto Bancario',1116,10116),
+        (318,118,'Boleto Bancario',1117,10117),
+        (319,119,'Boleto Bancario',1118,10118),
+        (320,120,'Boleto Bancario',1119,10119),
+        (321,121,'Boleto Bancario',1120,10120),
+        (322,122,'Boleto Bancario',1121,10121),
+        (323,123,'Boleto Bancario',1122,10122),
+        (324,124,'Boleto Bancario',1123,10123),
+        (325,125,'Boleto Bancario',1124,10124),
+        (326,126,'Boleto Bancario',1125,10125),
+        (327,127,'Boleto Bancario',1126,10126),
+        (328,128,'Boleto Bancario',1127,10127),
+        (329,129,'Boleto Bancario',1128,10128),
+        (330,130,'Boleto Bancario',1129,10129),
+        (331,131,'Boleto Bancario',1130,10130),
+        (332,132,'Boleto Bancario',1131,10131),
+        (333,133,'Boleto Bancario',1132,10132),
+        (334,134,'Boleto Bancario',1133,10133),
+        (335,135,'Boleto Bancario',1134,10134),
+        (336,136,'Boleto Bancario',1135,10135),
+        (337,137,'Boleto Bancario',1136,10136),
+        (338,138,'Boleto Bancario',1137,10137),
+        (339,139,'Boleto Bancario',1138,10138),
+        (340,140,'Boleto Bancario',1139,10139),
+        (341,141,'Boleto Bancario',1140,10140),
+        (342,142,'Boleto Bancario',1141,10141),
+        (343,143,'Boleto Bancario',1142,10142),
+        (344,144,'Boleto Bancario',1143,10143),
+        (345,145,'Boleto Bancario',1144,10144),
+        (346,146,'Boleto Bancario',1145,10145),
+        (347,147,'Boleto Bancario',1146,10146),
+        (348,148,'Boleto Bancario',1147,10147),
+        (349,149,'Boleto Bancario',1148,10148),
+        (350,150,'Boleto Bancario',1149,10149),
+        (351,151,'Boleto Bancario',1150,10150),
+        (352,152,'Boleto Bancario',1151,10151),
+        (353,153,'Boleto Bancario',1152,10152),
+        (354,154,'Boleto Bancario',1153,10153),
+        (355,155,'Boleto Bancario',1154,10154),
+        (356,156,'Boleto Bancario',1155,10155),
+        (357,157,'Boleto Bancario',1156,10156),
+        (358,158,'Boleto Bancario',1157,10157),
+        (359,159,'Boleto Bancario',1158,10158),
+        (360,160,'Boleto Bancario',1159,10159),
+        (361,161,'Boleto Bancario',1160,10160),
+        (362,162,'Boleto Bancario',1161,10161),
+        (363,163,'Boleto Bancario',1162,10162),
+        (364,164,'Boleto Bancario',1163,10163),
+        (365,165,'Boleto Bancario',1164,10164),
+        (366,166,'Boleto Bancario',1165,10165),
+        (367,167,'Boleto Bancario',1166,10166),
+        (368,168,'Boleto Bancario',1167,10167),
+        (369,169,'Boleto Bancario',1168,10168),
+        (370,170,'Boleto Bancario',1169,10169),
+        (371,171,'Boleto Bancario',1170,10170),
+        (372,172,'Boleto Bancario',1171,10171),
+        (373,173,'Boleto Bancario',1172,10172),
+        (374,174,'Boleto Bancario',1173,10173),
+        (375,175,'Boleto Bancario',1174,10174),
+        (376,176,'Boleto Bancario',1175,10175),
+        (377,177,'Boleto Bancario',1176,10176),
+        (378,178,'Boleto Bancario',1177,10177),
+        (379,179,'Boleto Bancario',1178,10178),
+        (380,180,'Boleto Bancario',1179,10179),
+        (381,181,'Boleto Bancario',1180,10180),
+        (382,182,'Boleto Bancario',1181,10181),
+        (383,183,'Boleto Bancario',1182,10182),
+        (384,184,'Boleto Bancario',1183,10183),
+        (385,185,'Boleto Bancario',1184,10184),
+        (386,186,'Boleto Bancario',1185,10185),
+        (387,187,'Boleto Bancario',1186,10186),
+        (388,188,'Boleto Bancario',1187,10187),
+        (389,189,'Boleto Bancario',1188,10188),
+        (390,190,'Boleto Bancario',1189,10189),
+        (391,191,'Boleto Bancario',1190,10190),
+        (392,192,'Boleto Bancario',1191,10191),
+        (393,193,'Boleto Bancario',1192,10192),
+        (394,194,'Boleto Bancario',1193,10193),
+        (395,195,'Boleto Bancario',1194,10194),
+        (396,196,'Boleto Bancario',1195,10195),
+        (397,197,'Boleto Bancario',1196,10196),
+        (398,198,'Boleto Bancario',1197,10197),
+        (399,199,'Boleto Bancario',1198,10198),
+        (400,200,'Boleto Bancario',1199,10199);
+
+
+INSERT INTO contas_a_pagar (Id_transacao,Id_colaborador,metodo_pagamento,valor_a_pagar)
+VALUES  (11,1,'Boleto bancário',1252),
+        (12,2,'Boleto bancário',2121),
+        (13,3,'Cartão de credito',1110),
+        (14,4,'Cartão de debito',3002),
+        (15,5,'Cartão de debito',2254),
+        (16,6,'Pagamento recorrente',4569),
+        (17,7,'Pagamento recorrente',4236),
+        (18,8,'Boleto bancário',4521),
+        (19,9,'Boleto bancário',2541),
+		
+		
+1-- Selecionar a quantidade total de estudantes cadastrados no banco;
+select count(id_aluno) from tb_aluno
+
+2-- Selecionar todos os estudantes com os respectivos cursos que eles estão cadastrados;
+select a.nome, t.curso from tb_aluno a
+inner join tb_turma t on a.id_turma = t.id_turma
+
+3-- Selecionar quais pessoas facilitadoras atuam em mais de uma turma.
+select tbdp.nome, count(tbf.id_turma) "Quantidade de turmas" from tb_facilitadores tbf
+inner join tb_departamento_pessoal tbdp on tbf.id_colaborador = tbdp.id_colaborador
+group by tbdp.nome having count(tbf.id_turma) > 1
+
+4-- Selecionar o método de pagamento dos alunos
+select tba.nome, car.metodo_pagamento from contas_a_receber car
+inner join tb_aluno tba on tba.id_aluno = car.id_aluno
+
+5-- Exibir todos os cursos e quantos alunos por curso
+select tbt.curso, count(tba.id_aluno) from tb_turma tbt
+inner join tb_aluno tba on tba.id_turma = tbt.id_turma
+group by tbt.curso
+
+6-- Exibir alunos nascidos antes de 1992
+SELECT EXTRACT('Year' FROM data_nascimento), nome
+FROM tb_aluno
+Where data_nascimento < '01/01/1992'
+
+
+
+
