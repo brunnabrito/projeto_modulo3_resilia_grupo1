@@ -1,0 +1,7 @@
+CREATE TABLE tb_facilitadores (
+	id_colaborador INT,
+	FOREIGN KEY (id_colaborador) REFERENCES tb_departamento_pessoal (id_colaborador),
+	id_turma INT,
+	FOREIGN KEY (id_turma) REFERENCES turma (id_turma)
+);
+
